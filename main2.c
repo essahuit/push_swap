@@ -6,7 +6,7 @@
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:44:11 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/17 05:04:51 by kessalih         ###   ########.fr       */
+/*   Updated: 2022/08/17 07:02:52 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -215,6 +215,47 @@ void	rrb(t_list **blst)
 	reverse_rotate(blst, "rrb");
 }
 
+int	ft_check_lst_sort(t_list *lst)
+{
+	while (lst->next)
+	{
+		if (ft_atoi(lst->content) > ft_atoi(lst->next->content))
+			return (0);
+		lst = lst->next;
+	}
+	return (1);
+}
+
+void	ft_sort_3(t_list **lst)
+{
+	t_list	*first;
+	t_list	*second;
+	t_list	*last;
+
+	while (!ft_check_lst_sort(*lst))
+	{
+		first = *lst;
+		second = (*lst)->next;
+		last = ft_lstlast(*lst);
+		if (ft_atoi(first->content) > ft_atoi(second->content))
+			sa(lst);
+		else if (ft_atoi(second->content) > ft_atoi(last->content))
+			rra(lst);
+	}
+}
+
+void	ft_sort_list(t_list **lst, t_list **blst, char *ar, int argc)
+{
+	if (argc == 2)
+		sa(lst);
+	else if (argc == 3)
+		ft_sort_3(lst);
+	//else if (argc == 4)
+	//	ft_sort_4(lst, blst);
+	//else if (argc == 5)
+	//	ft_sort_5(lst, blst);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*lst;
@@ -228,4 +269,7 @@ int	main(int argc, char **argv)
 	ft_fill_list(argc, argv,&lst);
 	ft_fill_array(argc, argv, ar);
 	ft_sort_array(argc - 1, ar);
+	ft_print_lst(lst);
+	ft_sort_list(&lst,&blst, ar, argc - 1);
+	ft_print_lst(lst);
 }
