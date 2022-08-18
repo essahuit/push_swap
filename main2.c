@@ -6,7 +6,7 @@
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:44:11 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/18 04:58:42 by kessalih         ###   ########.fr       */
+/*   Updated: 2022/08/18 06:40:14 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -325,6 +325,7 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 	int	i;
 	int	j;
 	int	x;
+	int	mid;
 
 	x = 7;
 	while (ft_lstsize(*lst) % x == 0)
@@ -335,11 +336,16 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 	j = 0;
 	while (i <= x)
 	{
+		mid = (((i - 1) * chunk) + (i * chunk)) / 2;
 		while (j < i * chunk)
 		{
 			while (ft_pos_array(ft_atoi((*lst)->content), ar, argc) >= i * chunk)
 				ft_move(lst, ar[j], 1);
 			pb(lst, blst);
+			printf("======%d========\n",ft_pos_array(ft_atoi((*blst)->content), ar, argc));
+			printf("======-%d-=======\n",mid);
+			if (ft_pos_array(ft_atoi((*blst)->content), ar, argc) > mid)
+				rb(blst);
 			j++;
 		}
 		i++;
@@ -412,5 +418,4 @@ int	main(int argc, char **argv)
 	//	printf("****%d****\n",ft_pos_array(ft_atoi(lst->content), ar, argc - 1));
 	//	lst = lst->next;
 	//}
-	while (1);
 }
