@@ -21,6 +21,7 @@ typedef struct s_list
 	struct s_list	*next;
 }		t_list;
 
+void	ft_sort_list(t_list **lst, t_list **blst, int *ar, int argc);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_isalpha(int c);
