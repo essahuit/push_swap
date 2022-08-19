@@ -258,6 +258,7 @@ void	ft_move(t_list **lst, int el, int flag)
 	pos = ft_pos(*lst, el);
 	//if (ft_lstsize(*lst) >= 2 && (ft_atoi((*lst)->next->content) == el))
 	//	sb(lst);
+	//printf("%d\n",mid);
 	if (pos <= mid)
 	{
 		if (flag == 1)
@@ -310,6 +311,58 @@ int	ft_pos_array(int el, int *ar, int argc)
 	return (-1);
 }
 
+int	ft_min_ele(int ele, t_list *lst, int mid)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	while (lst)
+	{
+		if (ft_atoi(lst->content) == ele)
+			break;
+		lst = lst->next;
+		i++;
+	}
+	if (i >= mid)
+		k = i;
+	else
+		k = ft_lstsize(lst) - i;
+	return (k);
+}
+
+int	ft_get_top(int *a, t_list *lst, int *ar, int i)
+{
+	int	mid;
+	int	chunk;
+	int	j;
+	int	x;
+	int	index;
+
+	x = 0;
+	chunk = (ft_lstsize(lst) - 5) / 5;
+	mid = ft_lstsize(lst) / 2;
+	j = (chunk * (i - 1));
+	while (j < i * chunk)
+	{
+		a[x] = ft_min_ele(ar[j], lst, mid);
+		//a[x] = 0;
+		j++;
+		x++;
+	}
+	j = 0;
+	index = 0;
+	//printf("dadass97ds8f7s89df%d\n",x);
+	while (j < x - 1)
+	{
+		if (a[j] > a[j + 1])
+			index = j + 1;
+		j++;
+	}
+	//ft_sort_array(x, a);
+	return (ar[(chunk * (i - 1)) + j]);
+}
+
 void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 {
 	int	chunk;
@@ -317,27 +370,32 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 	int	j;
 	int	x;
 	int	mid;
+	int	*a;
 
-	x = 3;
+	x = 5;
 	//while ((ft_lstsize(*lst) % x == 0) || (ft_lstsize(*lst) % x >= 5))
 	//	x--;
 	//printf("sfdsfdsfsd%d\n",x);
-	chunk = (ft_lstsize(*lst) - 2) / x;
+	chunk = (ft_lstsize(*lst) - 5) / x;
 	i = 1;
 	j = 0;
 	while (i <= x)
 	{
 		mid = (((i - 1) * chunk) + (i * chunk)) / 2;
+		if (i * chunk > 0)
+			a = malloc(sizeof(int) * (i * chunk));
 		while (j < i * chunk)
 		{
 			while (ft_pos_array(ft_atoi((*lst)->content), ar, argc) >= i * chunk)
-				ft_move(lst, ar[j], 1);
+				ft_move(lst, ft_get_top(a, *lst, ar, i), 1);
 			pb(lst, blst);
 			if (ft_pos_array(ft_atoi((*blst)->content), ar, argc) <= mid)
 				rb(blst);
 			j++;
 		}
 		i++;
+		if (i * chunk > 0)
+			free(a);
 	}
 }
 
@@ -443,4 +501,6 @@ int	main(int argc, char **argv)
 	//	printf("****%d****\n",ft_pos_array(ft_atoi(lst->content), ar, argc - 1));
 	//	lst = lst->next;
 	//}
+	//ft_index(&lst);
+	//ft_print(lst);
 }
