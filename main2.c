@@ -6,7 +6,7 @@
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:44:11 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/18 06:40:14 by kessalih         ###   ########.fr       */
+/*   Updated: 2022/08/19 04:10:41 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -93,17 +93,6 @@ void	ft_sort_array(int argc, int *ar)
 		}
 		i++;
 	}
-}
-
-void	ft_print_lst(t_list *lst)
-{
-	printf("*******\n");
-	while (lst)
-	{
-		printf("%s\n",lst->content);
-		lst = lst->next;
-	}
-	printf("*******\n");
 }
 
 void	rotate(t_list **lst, char *str)
@@ -267,6 +256,8 @@ void	ft_move(t_list **lst, int el, int flag)
 
 	mid = ft_lstsize(*lst) / 2;
 	pos = ft_pos(*lst, el);
+	//if (ft_lstsize(*lst) >= 2 && (ft_atoi((*lst)->next->content) == el))
+	//	sb(lst);
 	if (pos <= mid)
 	{
 		if (flag == 1)
@@ -327,11 +318,11 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 	int	x;
 	int	mid;
 
-	x = 7;
-	while (ft_lstsize(*lst) % x == 0)
-		x--;
-	printf("xxxxxx = %d\n",x);
-	chunk = ft_lstsize(*lst) / x;
+	x = 3;
+	//while ((ft_lstsize(*lst) % x == 0) || (ft_lstsize(*lst) % x >= 5))
+	//	x--;
+	//printf("sfdsfdsfsd%d\n",x);
+	chunk = (ft_lstsize(*lst) - 2) / x;
 	i = 1;
 	j = 0;
 	while (i <= x)
@@ -342,9 +333,7 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 			while (ft_pos_array(ft_atoi((*lst)->content), ar, argc) >= i * chunk)
 				ft_move(lst, ar[j], 1);
 			pb(lst, blst);
-			printf("======%d========\n",ft_pos_array(ft_atoi((*blst)->content), ar, argc));
-			printf("======-%d-=======\n",mid);
-			if (ft_pos_array(ft_atoi((*blst)->content), ar, argc) > mid)
+			if (ft_pos_array(ft_atoi((*blst)->content), ar, argc) <= mid)
 				rb(blst);
 			j++;
 		}
@@ -352,26 +341,62 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 	}
 }
 
+void	ft_print(t_list *lst)
+{
+	while (lst)
+	{
+		printf("%s\n",lst->content);
+		lst = lst->next;
+	}
+}
+
 void	ft_sort_100(t_list **lst, t_list **blst, int *ar, int argc)
 {
-	int	*a;
-	int	i;
+	int		*a;
+	int		i;
+	t_list	*last;
+	int		indexlast;
+	int		top_blst;
 
 	i = 0;
 	a = malloc(sizeof(int) * ft_lstsize(*lst));;
 	ft_push_sort(lst, blst, ar, argc);
 	ft_fill_array(ft_lstsize(*lst) + 1, *lst, a);
 	ft_sort_array(ft_lstsize(*lst), a);
-	//printf("esssssa %d\n",ft_lstsize(*lst));
 	if (ft_lstsize(*lst) >= 2 && !ft_check_lst_sort(*lst))
 		ft_sort_list(lst, blst, a, ft_lstsize(*lst));
-	//printf("%d\n",ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1]);
 	while (*blst)
 	{
-		while (ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1] != ft_atoi((*blst)->content))
-			ft_move(blst, ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1], 0);
-		pa(lst, blst);
+		//while (ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1] != ft_atoi((*blst)->content))
+		//	ft_move(blst, ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1], 0);
+		last = ft_lstlast(*lst);
+		indexlast = ft_pos_array(ft_atoi(last->content), ar, argc);
+		i = ft_pos_array(ft_atoi((*lst)->content), ar, argc);
+		if (indexlast == argc - 1)
+			indexlast = -1;
+		top_blst = ft_pos_array(ft_atoi((*blst)->content), ar, argc);
+		if (i - 1 == top_blst)
+			pa(lst, blst);
+		else if (top_blst > indexlast && top_blst < i)
+		{
+			pa(lst, blst);
+			ra(lst);
+		}
+		else if (ft_pos(*blst, ar[i - 1]) != -1)
+		{
+			//while (ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1] != ft_atoi((*blst)->content))
+			ft_move(blst,ar[i - 1], 0);
+		}
+		else if (ft_pos(*blst, ar[i - 1]) == -1)
+				rra(lst);
+		//printf("%d  %d %d %d\n",ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1, top_blst, i, indexlast);
+		//printf("%d\n",indexlast);
+		//pa(lst, blst);
+		//rra(lst);
 	}
+	while (!ft_check_lst_sort(*lst))
+		rra(lst);
+	free(a);
 }
 
 void	ft_sort_list(t_list **lst, t_list **blst, int *ar, int argc)
@@ -386,7 +411,7 @@ void	ft_sort_list(t_list **lst, t_list **blst, int *ar, int argc)
 		ft_sort_5(lst, blst, ar);
 	else if (argc <= 100)
 		ft_sort_100(lst, blst, ar, argc);
-	else if (argc <= 500)
+	else
 		ft_sort_100(lst, blst, ar, argc);
 }
 
@@ -411,7 +436,7 @@ int	main(int argc, char **argv)
 	//}
 	//ft_print_lst(lst);
 	ft_sort_list(&lst,&blst, ar, argc - 1);
-	ft_print_lst(lst);
+	//ft_print_lst(lst);
 	//ft_print_lst(blst);
 	//while (lst)
 	//{

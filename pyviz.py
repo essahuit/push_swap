@@ -206,7 +206,7 @@ class PsGui:
                     self.pile_a, self.pile_b = \
                         self.launch_cmds(self.cmds[self.i])
                     self.draw_rectangles()
-                    time.sleep(2 * self.speed)
+                    time.sleep(1 * self.speed)
                     self.can.update()
                     self.listbox.yview_scroll(1, 'units')
                     self.i += 1
