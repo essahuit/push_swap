@@ -6,7 +6,7 @@
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:44:11 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/19 04:10:41 by kessalih         ###   ########.fr       */
+/*   Updated: 2022/08/21 05:19:40 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -16,7 +16,13 @@ void	ft_check_dup(int argc, char **argv)
 	int	i;
 	int	j;
 
-	i = 1;
+	if (!argv[argc - 1])
+	{
+		i = 0;
+		argc--;
+	}
+	else
+		i = 1;
 	while (i < argc)
 	{
 		j = i + 1;
@@ -32,7 +38,26 @@ void	ft_check_dup(int argc, char **argv)
 
 void	ft_check_sort(int argc, char **argv)
 {
-	
+	int	i;
+	int	j;
+	int	k;
+
+	k = 0;
+	if (!argv[argc - 1])
+	{
+		i = 0;
+		argc--;
+	}
+	else
+		i = 1;
+	while (i < argc - 1)
+	{
+		if (ft_atoi(argv[i]) > ft_atoi(argv[i + 1]))
+			k = 1;
+		i++;
+	}
+	if (k == 0)
+		exit(0);
 }
 
 void	ft_check_arg(int argc, char **argv)
@@ -50,7 +75,13 @@ void	ft_fill_list(int argc, char **argv, t_list **lst)
 {
 	int	i;
 
-	i = 1;
+	if (!argv[argc - 1])
+	{
+		i = 0;
+		argc--;
+	}
+	else
+		i = 1;
 	while (i < argc)
 	{
 		ft_lstadd_back(lst, ft_lstnew(argv[i]));
@@ -107,7 +138,7 @@ void	rotate(t_list **lst, char *str)
 		(*lst)->next = NULL;
 		last->next = (*lst);
 		*lst = temp;
-		printf("%s\n",str);
+		printf("%s\n", str);
 	}
 }
 
@@ -130,7 +161,7 @@ void	push(t_list **lst1, t_list **lst2, char *str)
 	{
 		(*lst1) = (*lst1)->next;
 		ft_lstadd_front(lst2, temp);
-		printf("%s\n",str);
+		printf("%s\n", str);
 	}
 }
 
@@ -154,7 +185,7 @@ void	swap(t_list **lst, char *str)
 		(*lst) = (*lst)->next;
 		temp->next = (*lst)->next;
 		(*lst)->next = temp;
-		printf("%s\n",str);
+		printf("%s\n", str);
 	}
 }
 
@@ -191,7 +222,7 @@ void	reverse_rotate(t_list **lst, char *str)
 		last->next = temp;
 		(*lst) = last;
 		prev->next = NULL;
-		printf("%s\n",str);
+		printf("%s\n", str);
 	}
 }
 
@@ -236,7 +267,7 @@ void	ft_sort_3(t_list **lst)
 
 int	ft_pos(t_list *lst, int el)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (lst)
@@ -256,9 +287,6 @@ void	ft_move(t_list **lst, int el, int flag)
 
 	mid = ft_lstsize(*lst) / 2;
 	pos = ft_pos(*lst, el);
-	//if (ft_lstsize(*lst) >= 2 && (ft_atoi((*lst)->next->content) == el))
-	//	sb(lst);
-	//printf("%d\n",mid);
 	if (pos <= mid)
 	{
 		if (flag == 1)
@@ -311,7 +339,7 @@ int	ft_pos_array(int el, int *ar, int argc)
 	return (-1);
 }
 
-int	ft_min_ele(int ele, t_list *lst, int mid)
+int	ft_min_ele(int ele, t_list *lst, int mid, int size)
 {
 	int	i;
 	int	k;
@@ -320,18 +348,18 @@ int	ft_min_ele(int ele, t_list *lst, int mid)
 	while (lst)
 	{
 		if (ft_atoi(lst->content) == ele)
-			break;
+			break ;
 		lst = lst->next;
 		i++;
 	}
-	if (i >= mid)
+	if (i <= mid)
 		k = i;
 	else
-		k = ft_lstsize(lst) - i;
+		k = size - i + 1;
 	return (k);
 }
 
-int	ft_get_top(int *a, t_list *lst, int *ar, int i)
+int	ft_get_top(int *a, t_list *lst, int *ar, int i, int y)
 {
 	int	mid;
 	int	chunk;
@@ -340,93 +368,86 @@ int	ft_get_top(int *a, t_list *lst, int *ar, int i)
 	int	index;
 
 	x = 0;
-	chunk = (ft_lstsize(lst) - 5) / 5;
-	mid = ft_lstsize(lst) / 2;
+	chunk = (ft_lstsize(lst) - 4) / y;
+	mid = ft_lstsize(lst) / y;
 	j = (chunk * (i - 1));
 	while (j < i * chunk)
 	{
-		a[x] = ft_min_ele(ar[j], lst, mid);
-		//a[x] = 0;
+		a[x] = ft_min_ele(ar[j], lst, mid, ft_lstsize(lst));
 		j++;
 		x++;
 	}
 	j = 0;
 	index = 0;
-	//printf("dadass97ds8f7s89df%d\n",x);
 	while (j < x - 1)
 	{
 		if (a[j] > a[j + 1])
 			index = j + 1;
 		j++;
 	}
-	//ft_sort_array(x, a);
 	return (ar[(chunk * (i - 1)) + j]);
 }
 
-void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
+void	ft_push_sort2(t_list **lst, t_list **blst, int *ar, int argc, int x)
 {
-	int	chunk;
 	int	i;
 	int	j;
-	int	x;
+	int	chunk;
 	int	mid;
 	int	*a;
 
-	x = 5;
-	//while ((ft_lstsize(*lst) % x == 0) || (ft_lstsize(*lst) % x >= 5))
-	//	x--;
-	//printf("sfdsfdsfsd%d\n",x);
-	chunk = (ft_lstsize(*lst) - 5) / x;
 	i = 1;
 	j = 0;
+	chunk = (ft_lstsize(*lst) - 4) / x;
 	while (i <= x)
 	{
 		mid = (((i - 1) * chunk) + (i * chunk)) / 2;
-		if (i * chunk > 0)
-			a = malloc(sizeof(int) * (i * chunk));
+		a = malloc(sizeof(int) * (i * chunk));
 		while (j < i * chunk)
 		{
 			while (ft_pos_array(ft_atoi((*lst)->content), ar, argc) >= i * chunk)
-				ft_move(lst, ft_get_top(a, *lst, ar, i), 1);
+				ft_move(lst, ft_get_top(a, *lst, ar, i, x), 1);
 			pb(lst, blst);
 			if (ft_pos_array(ft_atoi((*blst)->content), ar, argc) <= mid)
 				rb(blst);
 			j++;
 		}
+		free(a);
 		i++;
-		if (i * chunk > 0)
-			free(a);
 	}
+}
+
+void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
+{
+	int	x;
+
+	if (ft_lstsize(*lst) <= 100)
+		x = 3;
+	else
+		x = 5;
+	while ((((ft_lstsize(*lst) - 4) % x) + 3 >= 5))
+		x--;
+	ft_push_sort2(lst, blst, ar, argc, x);
 }
 
 void	ft_print(t_list *lst)
 {
 	while (lst)
 	{
-		printf("%s\n",lst->content);
+		printf("%s\n", lst->content);
 		lst = lst->next;
 	}
 }
 
-void	ft_sort_100(t_list **lst, t_list **blst, int *ar, int argc)
+void	ft_push_a(t_list **lst, t_list **blst, int *ar, int argc)
 {
-	int		*a;
 	int		i;
 	t_list	*last;
 	int		indexlast;
 	int		top_blst;
 
-	i = 0;
-	a = malloc(sizeof(int) * ft_lstsize(*lst));;
-	ft_push_sort(lst, blst, ar, argc);
-	ft_fill_array(ft_lstsize(*lst) + 1, *lst, a);
-	ft_sort_array(ft_lstsize(*lst), a);
-	if (ft_lstsize(*lst) >= 2 && !ft_check_lst_sort(*lst))
-		ft_sort_list(lst, blst, a, ft_lstsize(*lst));
 	while (*blst)
 	{
-		//while (ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1] != ft_atoi((*blst)->content))
-		//	ft_move(blst, ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1], 0);
 		last = ft_lstlast(*lst);
 		indexlast = ft_pos_array(ft_atoi(last->content), ar, argc);
 		i = ft_pos_array(ft_atoi((*lst)->content), ar, argc);
@@ -441,19 +462,25 @@ void	ft_sort_100(t_list **lst, t_list **blst, int *ar, int argc)
 			ra(lst);
 		}
 		else if (ft_pos(*blst, ar[i - 1]) != -1)
-		{
-			//while (ar[ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1] != ft_atoi((*blst)->content))
-			ft_move(blst,ar[i - 1], 0);
-		}
+			ft_move(blst, ar[i - 1], 0);
 		else if (ft_pos(*blst, ar[i - 1]) == -1)
-				rra(lst);
-		//printf("%d  %d %d %d\n",ft_pos_array(ft_atoi((*lst)->content), ar, argc) - 1, top_blst, i, indexlast);
-		//printf("%d\n",indexlast);
-		//pa(lst, blst);
-		//rra(lst);
+			rra(lst);
 	}
+}
+
+void	ft_sort_100(t_list **lst, t_list **blst, int *ar, int argc)
+{
+	int	*a;
+
+	a = malloc(sizeof(int) * ft_lstsize(*lst));
+	ft_push_sort(lst, blst, ar, argc);
+	ft_fill_array(ft_lstsize(*lst) + 1, *lst, a);
+	ft_sort_array(ft_lstsize(*lst), a);
+	if (ft_lstsize(*lst) >= 2 && !ft_check_lst_sort(*lst))
+		ft_sort_list(lst, blst, a, ft_lstsize(*lst));
 	while (!ft_check_lst_sort(*lst))
 		rra(lst);
+	ft_push_a(lst, blst, ar, argc);
 	free(a);
 }
 
@@ -473,34 +500,38 @@ void	ft_sort_list(t_list **lst, t_list **blst, int *ar, int argc)
 		ft_sort_100(lst, blst, ar, argc);
 }
 
+int	ft_len_arr(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+		i++;
+	return (i);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*lst;
 	t_list	*blst;
 	int		*ar;
-	int		i;
+	char	**argv_s;
+	int		argc_s;
 
-	i = 0;
-	ar = malloc(sizeof(int) * (argc - 1));
-	ft_check_arg(argc, argv);
-	ft_fill_list(argc, argv,&lst);
-	ft_fill_array(argc, lst, ar);
-	ft_sort_array(argc - 1, ar);
-	//ft_print_lst(lst);
-	//while (i < argc - 1)
-	//{
-	//	printf("%d\n",ar[i]);
-	//	i++;
-	//}
-	//ft_print_lst(lst);
-	ft_sort_list(&lst,&blst, ar, argc - 1);
-	//ft_print_lst(lst);
-	//ft_print_lst(blst);
-	//while (lst)
-	//{
-	//	printf("****%d****\n",ft_pos_array(ft_atoi(lst->content), ar, argc - 1));
-	//	lst = lst->next;
-	//}
-	//ft_index(&lst);
-	//ft_print(lst);
+	if (argc == 2)
+	{
+		argv_s = ft_split(argv[1], ' ');
+		argc_s = ft_len_arr(argv_s) + 1;
+	}
+	else
+	{
+		argc_s = argc;
+		argv_s = argv;
+	}
+	ar = malloc(sizeof(int) * (argc_s - 1));
+	ft_check_arg(argc_s, argv_s);
+	ft_fill_list(argc_s, argv_s, &lst);
+	ft_fill_array(argc_s, lst, ar);
+	ft_sort_array(argc_s - 1, ar);
+	ft_sort_list(&lst, &blst, ar, argc_s - 1);
 }
