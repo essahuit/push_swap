@@ -6,7 +6,7 @@
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:22:29 by kessalih          #+#    #+#             */
-/*   Updated: 2021/11/11 18:22:10 by kessalih         ###   ########.fr       */
+/*   Updated: 2022/08/22 01:01:30 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -16,22 +16,21 @@ void	ft_check(const char *str, long long n, int sign)
 	int	i;
 
 	i = 0;
-
 	while (str[i])
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
-			exit(1);
+			ft_perror(1);
 		i++;
 	}
 	if (sign == 1)
 	{
 		if (n > INT_MAX)
-			exit(1);
+			ft_perror(1);
 	}
 	else
 	{
 		if (n - 1 > INT_MAX)
-			exit(1);
+			ft_perror(1);
 	}
 }
 
@@ -52,7 +51,7 @@ int	ft_atoi(const char *str)
 			sign = sign * (-1);
 		i++;
 		if (str[i] == '\0')
-			exit(1);
+			ft_perror(1);
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 		n = n * 10 + (str[i++] - '0');

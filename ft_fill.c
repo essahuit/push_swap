@@ -1,23 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   ft_fill.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 16:02:35 by kessalih          #+#    #+#             */
-/*   Updated: 2021/11/11 16:13:04 by kessalih         ###   ########.fr       */
+/*   Created: 2022/08/21 22:56:44 by kessalih          #+#    #+#             */
+/*   Updated: 2022/08/22 01:00:43 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+void	ft_fill_list(int argc, char **argv, t_list **lst)
 {
-	t_list	*el;
+	int	i;
 
-	if (!lst)
-		return ;
-	el = lst;
-	del(el->content);
-	free(el);
+	if (!argv[argc - 1])
+	{
+		i = 0;
+		argc--;
+	}
+	else
+		i = 1;
+	while (i < argc)
+	{
+		ft_lstadd_back(lst, ft_lstnew(argv[i], argc - 1));
+		i++;
+	}
+}
+
+void	ft_fill_array(int argc, t_list *lst, int *ar)
+{
+	int	i;
+
+	i = 1;
+	while (i < argc)
+	{
+		ar[i - 1] = ft_atoi(lst->content);
+		lst = lst->next;
+		i++;
+	}
 }
