@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations2.c                                      :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 22:53:16 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/25 09:46:41 by kessalih         ###   ########.fr       */
+/*   Created: 2021/11/02 08:58:09 by kessalih          #+#    #+#             */
+/*   Updated: 2021/11/10 11:51:28 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	ra(t_list **lst)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	rotate(lst, "ra\n");
-}
+	size_t	i;
+	char	*s;
 
-void	rb(t_list **blst)
-{
-	rotate(blst, "rb\n");
-}
-
-void	pb(t_list **lst, t_list **blst)
-{
-	push(lst, blst, "pb\n");
-}
-
-void	pa(t_list **lst, t_list **blst)
-{
-	push(blst, lst, "pa\n");
-}
-
-void	sa(t_list **lst)
-{
-	swap(lst, "sa\n");
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s)
+		return (NULL);
+	ft_strlcpy(s, s1, ft_strlen(s1) + 1);
+	ft_strlcat(s, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (s);
 }

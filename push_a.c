@@ -9,7 +9,7 @@
 /*   Updated: 2022/08/22 00:57:44 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 void	ft_sort_array(int argc, int *ar)
 {

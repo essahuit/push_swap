@@ -9,7 +9,7 @@
 /*   Updated: 2021/11/11 17:32:41 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 static size_t	ft_len(char const *s, char c)
 {

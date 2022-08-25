@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations2.c                                      :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 22:53:16 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/25 09:46:41 by kessalih         ###   ########.fr       */
+/*   Created: 2021/11/01 20:43:34 by kessalih          #+#    #+#             */
+/*   Updated: 2021/11/14 19:55:14 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	ra(t_list **lst)
+size_t	ft_strlcat(char *dst, const char *src, size_t len)
 {
-	rotate(lst, "ra\n");
-}
+	size_t	i;
+	size_t	l;
 
-void	rb(t_list **blst)
-{
-	rotate(blst, "rb\n");
-}
-
-void	pb(t_list **lst, t_list **blst)
-{
-	push(lst, blst, "pb\n");
-}
-
-void	pa(t_list **lst, t_list **blst)
-{
-	push(blst, lst, "pa\n");
-}
-
-void	sa(t_list **lst)
-{
-	swap(lst, "sa\n");
+	i = 0;
+	if (!dst && !len)
+		return (ft_strlen(src));
+	l = ft_strlen(dst);
+	if (len < ft_strlen(dst) + 1)
+		return (ft_strlen(src) + len);
+	while (src[i] && i < (len - l - 1))
+	{
+		dst[l + i] = src[i];
+		i++;
+	}
+	dst[l + i] = '\0';
+	return (l + ft_strlen(src));
 }

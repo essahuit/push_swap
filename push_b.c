@@ -9,7 +9,7 @@
 /*   Updated: 2022/08/22 00:58:40 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 int	ft_pos_array(int el, int *ar, int argc)
 {
@@ -91,20 +91,20 @@ void	ft_push_sort(t_list **lst, t_list **blst, int *ar, int argc)
 {
 	int	i;
 	int	j;
-	int	chunk;
+	int	c;
 	int	mid;
 	int	*a;
 
 	i = 1;
 	j = 0;
-	chunk = (ft_lstsize(*lst) - 4) / (*lst)->x;
+	c = (ft_lstsize(*lst) - 4) / (*lst)->x;
 	while (i <= (*lst)->x)
 	{
-		mid = (((i - 1) * chunk) + (i * chunk)) / 2;
-		a = malloc(sizeof(int) * (i * chunk));
-		while (j < i * chunk)
+		mid = (((i - 1) * c) + (i * c)) / 2;
+		a = malloc(sizeof(int) * (i * c));
+		while (j < i * c)
 		{
-			while (ft_pos_array(ft_atoi((*lst)->content), ar, argc) >= i * chunk)
+			while (ft_pos_array(ft_atoi((*lst)->content), ar, argc) >= i * c)
 				ft_move(lst, ft_get_top(a, *lst, ar, i), 1);
 			pb(lst, blst);
 			if (ft_pos_array(ft_atoi((*blst)->content), ar, argc) <= mid)

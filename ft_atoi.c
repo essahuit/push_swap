@@ -9,7 +9,7 @@
 /*   Updated: 2022/08/22 01:01:30 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 void	ft_check(const char *str, long long n, int sign)
 {

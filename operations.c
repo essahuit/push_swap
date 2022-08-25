@@ -9,7 +9,7 @@
 /*   Updated: 2022/08/22 01:00:10 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 void	rotate(t_list **lst, char *str)
 {
@@ -23,7 +23,7 @@ void	rotate(t_list **lst, char *str)
 		(*lst)->next = NULL;
 		last->next = (*lst);
 		*lst = temp;
-		printf("%s\n", str);
+		ft_putstr_fd(str, 1);
 	}
 }
 
@@ -36,7 +36,7 @@ void	push(t_list **lst1, t_list **lst2, char *str)
 	{
 		(*lst1) = (*lst1)->next;
 		ft_lstadd_front(lst2, temp);
-		printf("%s\n", str);
+		ft_putstr_fd(str, 1);
 	}
 }
 
@@ -50,7 +50,7 @@ void	swap(t_list **lst, char *str)
 		(*lst) = (*lst)->next;
 		temp->next = (*lst)->next;
 		(*lst)->next = temp;
-		printf("%s\n", str);
+		ft_putstr_fd(str, 1);
 	}
 }
 
@@ -68,6 +68,6 @@ void	reverse_rotate(t_list **lst, char *str)
 		last->next = temp;
 		(*lst) = last;
 		prev->next = NULL;
-		printf("%s\n", str);
+		ft_putstr_fd(str, 1);
 	}
 }

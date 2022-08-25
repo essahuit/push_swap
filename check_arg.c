@@ -9,11 +9,11 @@
 /*   Updated: 2022/08/22 01:00:31 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 void	ft_perror(int x)
 {
-	printf("Error\n");
+	ft_putstr_fd("Error\n", 2);
 	exit(x);
 }
 
@@ -80,6 +80,7 @@ void	ft_check_arg(int argc, char **argv)
 {
 	if (argc >= 2)
 	{
+		ft_atoi(argv[0]);
 		ft_check_dup(argc, argv);
 		ft_check_sort(argc, argv);
 	}

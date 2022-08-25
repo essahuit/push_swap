@@ -9,7 +9,7 @@
 /*   Updated: 2021/11/12 09:27:22 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 static void	ft_print(unsigned long n, int fd)
 {

@@ -9,7 +9,7 @@
 /*   Updated: 2021/11/12 10:34:28 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

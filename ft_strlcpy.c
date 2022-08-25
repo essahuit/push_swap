@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations2.c                                      :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 22:53:16 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/25 09:46:41 by kessalih         ###   ########.fr       */
+/*   Created: 2021/11/01 20:15:56 by kessalih          #+#    #+#             */
+/*   Updated: 2021/11/01 20:40:47 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	ra(t_list **lst)
+size_t	ft_strlcpy(char *dst, const char *src, size_t len)
 {
-	rotate(lst, "ra\n");
-}
+	size_t	i;
 
-void	rb(t_list **blst)
-{
-	rotate(blst, "rb\n");
-}
-
-void	pb(t_list **lst, t_list **blst)
-{
-	push(lst, blst, "pb\n");
-}
-
-void	pa(t_list **lst, t_list **blst)
-{
-	push(blst, lst, "pa\n");
-}
-
-void	sa(t_list **lst)
-{
-	swap(lst, "sa\n");
+	i = 0;
+	if (len == 0)
+		return (ft_strlen(src));
+	while (src[i] && i < len - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }

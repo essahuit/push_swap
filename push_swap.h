@@ -9,8 +9,8 @@
 /*   Updated: 2021/11/04 09:15:38 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -23,6 +23,10 @@ typedef struct s_list
 	struct s_list	*next;
 }		t_list;
 
+size_t	ft_strlcpy(char *dst, const char *src, size_t len);
+size_t	ft_strlcat(char *dst, const char *src, size_t len);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_perror(int x);
 void	pb(t_list **lst, t_list **blst);
 void	rb(t_list **blst);

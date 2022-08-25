@@ -9,16 +9,7 @@
 /*   Updated: 2022/08/21 05:19:40 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
-
-void	ft_print(t_list *lst)
-{
-	while (lst)
-	{
-		printf("%s\n", lst->content);
-		lst = lst->next;
-	}
-}
+#include "push_swap.h"
 
 int	ft_len_arr(char **argv)
 {
@@ -30,6 +21,30 @@ int	ft_len_arr(char **argv)
 	return (i);
 }
 
+char	**ft_sp(int argc, char **argv)
+{
+	int		i;
+	char	*temp1;
+	char	*temp2;
+	char	*str;
+	char	**argv_s;
+
+	i = 1;
+	str = ft_strdup("");
+	while (i < argc)
+	{
+		temp1 = ft_strjoin(argv[i], " ");
+		temp2 = ft_strjoin(str, temp1);
+		free(str);
+		str = temp2;
+		free(temp1);
+		i++;
+	}
+	argv_s = ft_split(str, ' ');
+	free(str);
+	return (argv_s);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*lst;
@@ -38,16 +53,8 @@ int	main(int argc, char **argv)
 	char	**argv_s;
 	int		argc_s;
 
-	if (argc == 2)
-	{
-		argv_s = ft_split(argv[1], ' ');
-		argc_s = ft_len_arr(argv_s) + 1;
-	}
-	else
-	{
-		argc_s = argc;
-		argv_s = argv;
-	}
+	argv_s = ft_sp(argc, argv);
+	argc_s = ft_len_arr(argv_s) + 1;
 	ar = malloc(sizeof(int) * (argc_s - 1));
 	ft_check_arg(argc_s, argv_s);
 	ft_fill_list(argc_s, argv_s, &lst);

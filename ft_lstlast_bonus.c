@@ -9,7 +9,7 @@
 /*   Updated: 2021/11/11 16:13:25 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include "push_swap.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {

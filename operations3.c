@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations2.c                                      :+:      :+:    :+:   */
+/*   operations3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kessalih <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 22:53:16 by kessalih          #+#    #+#             */
-/*   Updated: 2022/08/25 09:46:41 by kessalih         ###   ########.fr       */
+/*   Created: 2022/08/25 09:41:10 by kessalih          #+#    #+#             */
+/*   Updated: 2022/08/25 09:46:28 by kessalih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	ra(t_list **lst)
+void	sb(t_list **blst)
 {
-	rotate(lst, "ra\n");
+	swap(blst, "sb\n");
 }
 
-void	rb(t_list **blst)
+void	rra(t_list **lst)
 {
-	rotate(blst, "rb\n");
+	reverse_rotate(lst, "rra\n");
 }
 
-void	pb(t_list **lst, t_list **blst)
+void	rrb(t_list **blst)
 {
-	push(lst, blst, "pb\n");
-}
-
-void	pa(t_list **lst, t_list **blst)
-{
-	push(blst, lst, "pa\n");
-}
-
-void	sa(t_list **lst)
-{
-	swap(lst, "sa\n");
+	reverse_rotate(blst, "rrb\n");
 }
